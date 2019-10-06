@@ -1,0 +1,49 @@
+create table Usuario(
+	cod_usuario int,
+	usuario varchar(45),
+	senha varchar(30),
+	tipo int
+);
+
+create table Plano(
+        cod_plano int,
+	tipo int,
+	preco double,
+	constraint pk_plano primary key(cod_plano) 
+);
+
+create table Comerciante(
+	cod_comerciante int,
+	cpf varchar(11) unique,
+	nome varchar(100),
+	email varchar(45),
+	nome_comercio varchar(45),
+	tipo_comercio varchar(45),
+	qtd_anuncios int,
+	cod_plano int,
+	constraint pk_comerciante primary key(cod_comerciante),
+	constraint fk_comer_plano foreign key(cod_plano) references Plano(cod_plano)
+);
+
+create table Pagamentos(
+	cod_pagamento int,
+	cod_comerciante int,
+	valor double,
+	constraint pk_pagamento primary key(cod_pagamento),
+	constraint fk_comerciante foreign key(cod_comerciante) references Comerciante(cod_comerciante)
+);
+
+create table Anuncios(
+	cod_anuncio int,
+	diretorio varchar(50),
+	cod_comerciante int,
+	constraint pk_anuncio primary key(cod_anuncio)
+);
+
+create table Comerc_anunc(
+	cod_comerciante int,
+	cod_anuncio int,
+	CONSTRAINT PK_comerc_anunc PRIMARY KEY (COD_comerciante, COD_anunc),
+	constraint fk_anuncio foreign key(cod_anuncio) references Anuncio(cod_anuncio),
+	constraint fk_comerciante foreign key(cod_comerciante) references Comerciante(cod_comerciante)
+);
